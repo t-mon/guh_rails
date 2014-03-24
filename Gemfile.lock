@@ -1,3 +1,9 @@
+PATH
+  remote: ../hive_rpc_wrapper
+  specs:
+    hive_rpc_wrapper (0.0.1)
+      json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -87,6 +93,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  hive_rpc_wrapper!
   jbuilder (~> 1.2)
   rails (= 4.0.2)
   sdoc
