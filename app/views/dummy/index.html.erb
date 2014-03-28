@@ -1,0 +1,21 @@
+<p>New Device:</p>
+
+<%= form_tag '/api/v1/devices' %>
+
+  <p><label>deviceClassId</label><br />
+  <%= text_field_tag 'device[deviceClassId]', "{324219e8-7c53-41b5-b314-c2900cd15252}" %></p>
+  
+  <p><label>familyCode</label><br />
+  <%= text_field_tag 'device[familyCode]', "A" %></p>
+  
+  <p><label>buttonCode</label><br />
+  <%= text_field_tag 'device[buttonCode]', "A" %></p>
+  
+  <p><%= submit_tag 'Create' %></p>
+  
+</form>
+
+
+<p>
+  <a href="http://kbarrett.com/blog/2014/03/24/authentication-with-ember-rails.html#crosssite_request_forgery">Ajax &amp; CSRF Protection</a>
+</p>

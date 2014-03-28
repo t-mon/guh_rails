@@ -13,4 +13,6 @@ HiveRails::Application.routes.draw do
     end
   end
   
+  root :to => 'dummy#index'
+  
 end
