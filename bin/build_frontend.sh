@@ -10,4 +10,4 @@ echo "Building the new frontend..."
 grunt build
 
 echo "Copying built frontend code..."
-cp -vr dist/* ../hive_rails/public/
+cp -vr dist/* ../guh_rails/public/

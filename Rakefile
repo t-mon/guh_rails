@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-HiveRails::Application.load_tasks
+GuhRails::Application.load_tasks

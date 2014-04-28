@@ -1,4 +1,4 @@
-HiveRails::Application.routes.draw do
+GuhRails::Application.routes.draw do
   
   namespace :api do
     namespace :v1 do
@@ -8,6 +8,7 @@ HiveRails::Application.routes.draw do
           get 'supported' => 'devices#supported'
         end
       end
+      resource  :introspect
       resources :rules
       
     end

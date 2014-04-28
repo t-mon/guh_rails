@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-HiveRails::Application.config.secret_key_base = '418dfd445a5088e127bde4298ef7277a538c0ace54332fd62df32c58f4e56d9b5881efd5e21ef83c347440bafc3f40c3dd21680f92140b324fceda3180e866de'
+GuhRails::Application.config.secret_key_base = '418dfd445a5088e127bde4298ef7277a538c0ace54332fd62df32c58f4e56d9b5881efd5e21ef83c347440bafc3f40c3dd21680f92140b324fceda3180e866de'

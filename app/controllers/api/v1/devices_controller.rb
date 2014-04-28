@@ -1,7 +1,7 @@
 class Api::V1::DevicesController < ApplicationController
   
   def index
-    @device_array = HiveRpcWrapper::Device.configured
+    @device_array = Guh::Device.configured
     
     respond_to do |format|
       format.json { render json: @device_array }
@@ -9,7 +9,7 @@ class Api::V1::DevicesController < ApplicationController
   end
   
   def supported
-    @device_array = HiveRpcWrapper::Device.supported
+    @device_array = Guh::Device.supported
     
     respond_to do |format|
       format.json { render json: @device_array }
@@ -19,7 +19,7 @@ class Api::V1::DevicesController < ApplicationController
   def create
     device_class_id = params[:device].delete(:deviceClassId)
     
-    HiveRpcWrapper::Device.add(device_class_id, device_params)
+    Guh::Device.add(device_class_id, device_params)
   end
   
   private
