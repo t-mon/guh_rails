@@ -17,6 +17,8 @@ class Api::V1::ActionsController < ApplicationController
   private
   
   def typecast(attributes)
+    attributes ||= {}
+    
     # FIXME: this is stupid! find a better way!
     # TOOD: find a way to properly typecast these things for ALL controllers
     attributes.each do |key, value|
