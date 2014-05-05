@@ -1,3 +1,132 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
+<form>
+  <p>
+    <label for="vendor">Hersteller</label><br />
+    <select name="vendor" id="vendor">
+      <option>Please select a vendor...</option>
+    </select>
+  </p>
+  
+  <p id="device_container" style="display:none">
+    <label for="device">Gerät</label><br />
+    <select name="device" id="device">
+      <option>Please select a device...</option>
+    </select>
+  </p>
+</form>
+
+<script type="text/javascript">
+  // load the vendors
+  $(function(){
+    $.ajax('/api/v1/vendors.json', {
+      success: function(data, status, jqXHR){
+        $(data).each(function(i, vendor){
+          var option = $('<option>');
+          option.val(vendor.id);
+          option.html(vendor.name);
+          $('#vendor').append(option);
+        });
+      
+      }
+    })
+  })
+  
+  $('#vendor').change(function(){
+    var id = $('#vendor').val();
+    
+    $.ajax('/api/v1/vendors/' + id + '/device_classes.json', {
+      success: function(data, statux, jqXHR) {
+        $('#device').html('<option>Please select a device...</option>');
+        
+        $(data).each(function(i, device_class){
+          var option = $('<option>');
+          option.val(device_class.id);
+          option.html(device_class.name);
+          $('#device').append(option);
+        });
+      }
+    });
+    
+    $('#device_container').show();
+  })
+</script>
+
+<hr />
+
+<% @devices.each do |d| %>
+  <strong><%= d['name'] %></strong>
+  
+  <% Guh::ActionType.all(d['deviceClassId']).each do |action| %>
+    
+    <%= form_tag execute_api_v1_device_action_path(d['id'], action['id'], format: 'json'), class: 'action_form' %>
+    
+    <form class="action_form" action="/api/v1/devices/<%= d['id'] %>/actions/<%= action['id'] %>/execute">
+      
+      <p><strong><%= action['name'] %></strong></p>
+      
+      <% action['params'].each do |param| %>
+        <% case param['type'] %>
+        <% when 'bool' %>
+          <p>
+            <label><%= param['name'] %></label><br />
+            <%= hidden_field_tag "action_params[#{param['name']}]", 'no' %>
+            <%= check_box_tag "action_params[#{param['name']}]", 'yes' %>
+          </p>
+        <% when 'int' %>
+          <p>
+            <label><%= param['name'] %></label><br />
+            <input type="text" name="action_params[<%= param['name'] %>]" />
+          </p>
+        <% else %>
+          <p>
+            <label><%= param['name'] %></label><br />
+            <input type="text" name="action_params[<%= param['name'] %>]" /><br />
+            <span style="color: red;">UNHANDLED</span>
+          </p>
+        <% end %>
+      
+      <% end %>
+      
+      <p><input type="submit" name="Execute Action" /></p>
+    </form>
+  <% end %>
+  
+  <hr />
+<% end %>
+
+<script type="text/javascript">
+  $('.action_form').on('submit', function(evt){
+    evt.preventDefault();
+    
+    var el = $(evt.target);
+    
+    console.log(el.attr('action'));
+    console.log(el.serialize());
+    
+    $.ajax(el.attr('action'), {
+      method: 'post',
+      data: el.serialize(),
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      success: function(data, status, jqXHR) {
+        alert(status);
+      },
+      error: function(data, status, jqXHR) {
+        alert(status);
+      }
+    });
+  })
+</script>
+
+
+/devices/UUID/actions/UUID/execute
+
+
+
+
+<hr />
+
 <p>New Device:</p>
 
 <%= form_tag '/api/v1/devices' %>

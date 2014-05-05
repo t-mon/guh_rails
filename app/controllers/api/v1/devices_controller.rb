@@ -1,15 +1,7 @@
 class Api::V1::DevicesController < ApplicationController
   
   def index
-    @device_array = Guh::Device.configured
-    
-    respond_to do |format|
-      format.json { render json: @device_array }
-    end
-  end
-  
-  def supported
-    @device_array = Guh::Device.supported
+    @device_array = Guh::Device.all
     
     respond_to do |format|
       format.json { render json: @device_array }

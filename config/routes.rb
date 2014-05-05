@@ -4,12 +4,18 @@ GuhRails::Application.routes.draw do
     namespace :v1 do
       
       resources :devices do
-        collection do
-          get 'supported' => 'devices#supported'
+        resources :actions do
+          member do
+            post 'execute'
+          end
         end
       end
+      resources :device_classes
       resource  :introspect
       resources :rules
+      resources :vendors do
+        resources :device_classes
+      end
       
     end
   end
