@@ -18,6 +18,14 @@ class Api::V1::DevicesController < ApplicationController
     end
   end
   
+  def destroy
+    response = Guh::Device.remove(params[:id])
+    
+    respond_to do |format|
+      format.json { render json: response }
+    end
+  end
+  
   private
   
   def device_params
