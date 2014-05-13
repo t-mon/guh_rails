@@ -11,10 +11,10 @@ class Api::V1::DevicesController < ApplicationController
   def create
     device_class_id = params[:device].delete(:deviceClassId)
     
-    response = Guh::Device.add(device_class_id, device_params)
+    device_id = Guh::Device.add(device_class_id, device_params)
     
     respond_to do |format|
-      format.json { render json: response }
+      format.json { render json: {device_id: device_id} }
     end
   end
   
