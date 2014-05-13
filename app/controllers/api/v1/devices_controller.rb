@@ -8,6 +8,14 @@ class Api::V1::DevicesController < ApplicationController
     end
   end
   
+  def show
+    @device = Guh::Device.find(params[:id])
+    
+    respond_to do |format|
+      format.json { render json: @device }
+    end
+  end
+  
   def create
     device_class_id = params[:device].delete(:deviceClassId)
     
