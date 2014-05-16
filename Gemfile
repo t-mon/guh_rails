@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 gem 'guh'
 
-# Use unicorn as the app server
-gem 'unicorn', '~> 4.8.2'
+# Use puma as the app server
+gem 'puma', '~> 2.8'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
