@@ -1,5 +1,62 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
+<h2>Endpoints</h2>
+
+<div id="endpoints">
+  <ul>
+    <li><%= link_to api_v1_devices_path(format: 'json'), api_v1_devices_path(format: 'json') %></li>
+    <li><%= link_to api_v1_device_classes_path(format: 'json'), api_v1_device_classes_path(format: 'json') %></li>
+    <li><%= link_to api_v1_introspect_path(format: 'json'), api_v1_introspect_path(format: 'json') %></li>
+    <li><%= link_to api_v1_rules_path(format: 'json'), api_v1_rules_path(format: 'json') %></li>
+    <li><%= link_to api_v1_vendors_path(format: 'json'), api_v1_vendors_path(format: 'json') %></li>
+  </ul>
+</div>
+
+<div id="response_container" style="display: none;">
+  <h3>Response</h3>
+
+  <pre id="endpoint_response"></pre>
+</div>
+
+<script type="text/javascript">
+
+  $('#endpoints a').each(function(i, endpoint){
+
+
+    $(endpoint).click(function(event){
+      event.preventDefault();
+
+      element = $(event.target);
+      console.log(event);
+      console.log(event.target);
+      console.log(element.attr('href'))
+
+      $.ajax(element.attr('href'), {
+        method: 'GET',
+        beforeSend: function() {
+          $('#endpoint_response').html('Please wait...');
+          $('#response_container').show();
+        },
+        success: function(data, status, jqXHR) {
+          $('#endpoint_response').text(JSON.stringify(data, null, 4));
+        }
+      })
+
+    });
+
+  });
+
+</script>
+
+
+
+
+
+
+
+
+
+<h2>Add Device</h2>
 
 <form>
   <p>
@@ -8,7 +65,7 @@
       <option>Please select a vendor...</option>
     </select>
   </p>
-  
+
   <p id="device_container" style="display:none">
     <label for="device">Gerät</label><br />
     <select name="device" id="device">
@@ -28,18 +85,18 @@
           option.html(vendor.name);
           $('#vendor').append(option);
         });
-      
+
       }
     })
   })
-  
+
   $('#vendor').change(function(){
     var id = $('#vendor').val();
-    
+
     $.ajax('/api/v1/vendors/' + id + '/device_classes.json', {
       success: function(data, statux, jqXHR) {
         $('#device').html('<option>Please select a device...</option>');
-        
+
         $(data).each(function(i, device_class){
           var option = $('<option>');
           option.val(device_class.id);
@@ -48,63 +105,67 @@
         });
       }
     });
-    
+
     $('#device_container').show();
   })
 </script>
 
-<hr />
+<h2>Execute Action</h2>
 
 <% @devices.each do |d| %>
   <strong><%= d['name'] %></strong>
-  
+
   <% Guh::ActionType.all(d['deviceClassId']).each do |action| %>
-    
+
     <%= form_tag execute_api_v1_device_action_path(d['id'], action['id'], format: 'json'), class: 'action_form' %>
-    
+
     <form class="action_form" action="/api/v1/devices/<%= d['id'] %>/actions/<%= action['id'] %>/execute">
-      
+
       <p><strong><%= action['name'] %></strong></p>
-      
-      <% action['params'].each do |param| %>
+
+      <% (action['paramTypes'] || []).each_with_index do |param, i| %>
+        <%= hidden_field_tag "action_params[#{i}][name]", param['name'] %>
+
         <% case param['type'] %>
         <% when 'bool' %>
           <p>
             <label><%= param['name'] %></label><br />
-            <%= hidden_field_tag "action_params[#{param['name']}]", 'no' %>
-            <%= check_box_tag "action_params[#{param['name']}]", 'yes' %>
+
+
+            <%= hidden_field_tag "action_params[#{i}][value]", 'false' %>
+            <%= check_box_tag "action_params[#{i}][value]", 'true' %>
           </p>
         <% when 'int' %>
           <p>
             <label><%= param['name'] %></label><br />
-            <input type="text" name="action_params[<%= param['name'] %>]" />
+            <input type="number" name="action_params[<%= i %>][value]" value="" />
           </p>
         <% else %>
           <p>
             <label><%= param['name'] %></label><br />
-            <input type="text" name="action_params[<%= param['name'] %>]" /><br />
+            <input type="text" name="action_params[<%= i %>][value]" /><br />
             <span style="color: red;">UNHANDLED</span>
           </p>
         <% end %>
-      
+
       <% end %>
-      
-      <p><input type="submit" name="Execute Action" /></p>
+
+      <p><input type="submit" value="Execute Action" /></p>
     </form>
   <% end %>
-  
+
   <hr />
 <% end %>
 
 <script type="text/javascript">
   $('.action_form').on('submit', function(evt){
     evt.preventDefault();
-    
+
     var el = $(evt.target);
-    
+
     console.log(el.attr('action'));
     console.log(el.serialize());
-    
+
     $.ajax(el.attr('action'), {
       method: 'post',
       data: el.serialize(),
@@ -133,15 +194,15 @@
 
   <p><label>deviceClassId</label><br />
   <%= text_field_tag 'device[deviceClassId]', "{324219e8-7c53-41b5-b314-c2900cd15252}" %></p>
-  
+
   <p><label>familyCode</label><br />
   <%= text_field_tag 'device[familyCode]', "A" %></p>
-  
+
   <p><label>buttonCode</label><br />
   <%= text_field_tag 'device[buttonCode]', "A" %></p>
-  
+
   <p><%= submit_tag 'Create' %></p>
-  
+
 </form>
 
 

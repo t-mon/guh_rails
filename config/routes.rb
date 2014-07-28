@@ -1,8 +1,8 @@
 GuhRails::Application.routes.draw do
-  
+
   namespace :api do
     namespace :v1 do
-      
+
       resources :devices do
         resources :actions do
           member do
@@ -16,10 +16,12 @@ GuhRails::Application.routes.draw do
       resources :vendors do
         resources :device_classes
       end
-      
+
     end
   end
-  
+
+  get 'introspect' => 'dummy#introspect'
+
   root :to => 'dummy#index'
-  
+
 end

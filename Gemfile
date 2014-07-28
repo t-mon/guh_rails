@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'guh'
+gem 'guh', path: '../guh.rb'
 
 # Use unicorn as the app server
 gem 'unicorn', '~> 4.8'
