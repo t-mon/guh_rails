@@ -2,6 +2,14 @@ class Api::V1::ActionsController < ApplicationController
 
   before_filter :find_device
 
+  def index
+    response = Guh::ActionType.all(@device['deviceClassId'])
+
+    respond_to do |format|
+      format.json { render json: response }
+    end
+  end
+
   def execute
     # @action = Guh::Action.find(@device['id'])
 
@@ -50,8 +58,8 @@ class Api::V1::ActionsController < ApplicationController
   end
 
   def find_device
-    # @device = Guh::Device.find(params[:device_id])
-    # logger.info @device
+    @device = Guh::Device.find(params[:device_id])
+    logger.info @device
   end
 
 end

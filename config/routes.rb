@@ -5,9 +5,7 @@ GuhRails::Application.routes.draw do
 
       resources :devices do
         resources :actions do
-          member do
-            post 'execute'
-          end
+          post 'execute', on: :member
         end
       end
       resources :device_classes
