@@ -1,9 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'guh', path: '../guh.rb'
-
-# Use unicorn as the app server
-gem 'unicorn', '~> 4.8'
+gem 'guh'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
