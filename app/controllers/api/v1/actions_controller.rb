@@ -24,25 +24,6 @@ class Api::V1::ActionsController < ApplicationController
 
   private
 
-  def sanitize_params(attributes={})
-    attributes ||= {}
-
-    logger.info '-' * 80
-    logger.info attributes.inspect
-    logger.info '-' * 80
-
-    sanitized_attributes = []
-
-    attributes.each do |k, data|
-      sanitized_attributes << data
-    end
-
-    logger.info sanitized_attributes.inspect
-    logger.info '-' * 80
-
-    return sanitized_attributes
-  end
-
   def typecast(attributes)
     attributes ||= {}
 

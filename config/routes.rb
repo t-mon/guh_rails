@@ -4,13 +4,18 @@ GuhRails::Application.routes.draw do
     namespace :v1 do
 
       resources :devices do
+        get 'discover', on: :collection
+        post 'confirm_pairing', on: :collection
+
         resources :actions do
           post 'execute', on: :member
         end
       end
+
       resources :device_classes
       resource  :introspect
       resources :rules
+
       resources :vendors do
         resources :device_classes
       end
@@ -20,6 +25,6 @@ GuhRails::Application.routes.draw do
 
   get 'introspect' => 'dummy#introspect'
 
-  root :to => 'dummy#index'
+  root to: 'dummy#index'
 
 end
