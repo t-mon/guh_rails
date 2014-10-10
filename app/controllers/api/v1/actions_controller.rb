@@ -13,7 +13,7 @@ class Api::V1::ActionsController < ApplicationController
   def execute
     # @action = Guh::Action.find(@device['id'])
 
-    response = Guh::Action.execute(params[:device_id], params[:id], sanitize_params(params[:action_params]))
+    response = Guh::Action.execute(params[:device_id], params[:id], params[:action_params])
 
     logger.info response
 
