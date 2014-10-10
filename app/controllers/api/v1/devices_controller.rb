@@ -19,7 +19,7 @@ class Api::V1::DevicesController < ApplicationController
   def create
     device_class_id = params[:device].delete(:deviceClassId)
 
-    device_id = Guh::Device.add(device_class_id, device_params)
+    device_id = Guh::Device.add(device_params[:deviceClassId], device_params[:deviceParams])
 
     respond_to do |format|
       format.json { render json: {device_id: device_id} }
@@ -43,7 +43,7 @@ class Api::V1::DevicesController < ApplicationController
   end
 
   def discover
-    @discovered_devices = Guh::Device.discover(params[:device_class_id], sanitize_params(params[:discovery_params]))
+    @discovered_devices = Guh::Device.discover(params[:device_class_id], params[:discovery_params])
 
     respond_to do |format|
       format.json { render json: @discovered_devices }
