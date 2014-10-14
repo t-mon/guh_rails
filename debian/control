@@ -14,6 +14,7 @@ Depends: ${shlibs:Depends},
   ruby2.0-dev,
   unicorn,
   nodejs,
+  ruby-sqlite3,
   build-essential
 Description: server for home automation systems - rails
  'Gear Up your Home!' - Home automation server.
