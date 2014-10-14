@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd /usr/share/guh/guh_rails
+cd /usr/share/guh/guh-rails/
 gem install bundler
 bundle install
 
