@@ -1,6 +1,6 @@
 #!/bin/sh
 
 cd /usr/share/guh/guh-rails/
-gem install bundler
-bundle install
+gem install bundler --no-rdoc --no-ri
+bundle install 
 
