@@ -1,0 +1,21 @@
+Source: guh-rails
+Maintainer: Simon Stürz <simon.stuerz@guh.guru>
+Section: utils
+Priority: optional
+Homepage: https://guh.guru
+Standards-Version: 3.9.5
+Build-Depends: debhelper (>= 9)
+
+Package: guh-rails
+Architecture: all
+Depends: ${shlibs:Depends}, 
+  ${misc:Depends},
+  ruby2.1,
+  ruby2.1-dev,
+  unicorn,
+  nodejs
+Description: server for home automation systems - rails
+ 'Gear Up your Home!' - Home automation server.
+ guh is a home automation system aiming for easy integration of various
+ existing home automation and controlling devices into a fully automated
+ system.
