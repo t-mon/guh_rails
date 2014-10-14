@@ -10,10 +10,11 @@ Package: guh-rails
 Architecture: all
 Depends: ${shlibs:Depends}, 
   ${misc:Depends},
-  ruby2.1,
-  ruby2.1-dev,
+  ruby2.0,
+  ruby2.0-dev,
   unicorn,
-  nodejs
+  nodejs,
+  build-essential
 Description: server for home automation systems - rails
  'Gear Up your Home!' - Home automation server.
  guh is a home automation system aiming for easy integration of various
