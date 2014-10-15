@@ -3,4 +3,4 @@
 	dh $@
 
 override_dh_install:
-	dh_install src/ /usr/share/guh/guh-rails
+	dh_install src/* /usr/share/guh/guh-rails
