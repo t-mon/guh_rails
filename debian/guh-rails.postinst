@@ -1,5 +1,13 @@
 #!/bin/sh
 
+echo "replacing old unicorn config file..."
+if [ -f "/etc/default/unicorn-guh" ]; then
+   echo "/etc/default/unicorn -> unicorn.backup"
+   mv /etc/default/unicorn /etc/default/unicorn.backup
+   echo "/etc/default/unicorn-guh -> unicorn"
+   mv /etc/default/unicorn-guh /etc/default/unicorn
+fi
+
 echo "setting up gem environment..."
 cd /usr/share/guh/guh-rails/
 gem install bundler --no-rdoc --no-ri
