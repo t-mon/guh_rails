@@ -10,7 +10,7 @@ fi
 
 echo "setting up gem environment..."
 cd /usr/share/guh/guh-rails/
-gem install bundler --no-rdoc --no-ri
+gem install bundler 
 echo "install missing gems for guh-rails"
 bundle install 
 
